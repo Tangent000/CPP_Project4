@@ -70,6 +70,9 @@ class Mat
     // virtual Mat & operator-= (const Mat & rhs)=0;
     // virtual Mat & operator*= (const Mat & rhs)=0;
     // virtual Mat & operator/= (const Mat & rhs)=0;
+
+    virtual void printMat()=0;
+
     //for type conversions
     template <typename T>
     operator Mat_<T>&();
@@ -103,9 +106,18 @@ class Mat_:public Mat
     // Mat_ & operator- (const Mat & rhs);
     // Mat_ & operator* (const Mat & rhs);
     // Mat_ & operator/ (const Mat & rhs);
+
+    void printMat();
 };
 
+
 // declare the template classes here
+template class Mat_<unsigned char>;
+template class Mat_<short>;
+template class Mat_<int>;
+template class Mat_<float>;
+template class Mat_<double>;
+
 typedef Mat_<unsigned char> Mat_uchar;
 typedef Mat_<short> Mat_short;
 typedef Mat_<int> Mat_int;

@@ -75,9 +75,6 @@ Mat_<T>::Mat_(size_t rows, size_t cols, size_t channels, T *data)
     // check the dimensions
     if (rows == 0 || cols == 0 || channels == 0)
         throw std::invalid_argument("Mat_ constructor: rows, cols, channels must be positive.");
-    // check if the data and dimensions match
-    if (rows * cols * channels != sizeof(*data) / sizeof(T))
-        throw std::invalid_argument("Mat_ constructor: data size does not match.");
     if (data == NULL)
     {
         this->data = new T[rows * cols * channels];
@@ -147,6 +144,26 @@ bool Mat_<T>::operator==(const Mat &rhs)
         return true;
     }
     return false;
+}
+
+template <typename T>
+void Mat_<T>::printMat()
+{
+    if (channels != 1)
+    {
+        std::cout << "Mat_ printMat: only support single channel matrix." << std::endl;
+        return;
+    }
+    std::cout <<"[";
+    for (size_t i = 0; i < rows * cols; i++)
+    {
+        std::cout << data[i];
+        if((i+1) % cols == 0 && i != 0 && i != rows * cols - 1)
+            std::cout <<";"<< std::endl;
+        else if(i != rows * cols - 1)
+            std::cout <<", ";
+    }
+    std::cout <<"]" <<std::endl;
 }
 
 // template <typename T>
