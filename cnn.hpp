@@ -4,6 +4,8 @@
 
 typedef enum _mattype {UNSIGNED_CHAR, SHORT, INT, FLOAT, DOUBLE} mattype;
 
+template <typename T> class Mat_;   //forward declaration (let Mat class knows the existance of Mat_ class)
+
 class Mat
 {
     public:
@@ -11,6 +13,7 @@ class Mat
     size_t cols;
     size_t channels;
     mattype type;
+    int * _data;    //used to point to data from derived classes
 
     Mat(size_t rows = 0, size_t cols = 0, size_t channels = 0, mattype type = DOUBLE)
         : rows(rows), cols(cols), channels(channels), type(type)
@@ -59,22 +62,18 @@ class Mat
     }
 
     virtual bool operator!= (const Mat & rhs){ return !(*this == rhs);}
-    virtual Mat & operator+ (const Mat & rhs)=0;
-    virtual Mat & operator- (const Mat & rhs)=0;
-    virtual Mat & operator* (const Mat & rhs)=0;
-    virtual Mat & operator/ (const Mat & rhs)=0;
-    virtual Mat & operator+= (const Mat & rhs)=0;
-    virtual Mat & operator-= (const Mat & rhs)=0;
-    virtual Mat & operator*= (const Mat & rhs)=0;
-    virtual Mat & operator/= (const Mat & rhs)=0;
+    // virtual Mat & operator+ (const Mat & rhs)=0;
+    // virtual Mat & operator- (const Mat & rhs)=0;
+    // virtual Mat & operator* (const Mat & rhs)=0;
+    // virtual Mat & operator/ (const Mat & rhs)=0;
+    // virtual Mat & operator+= (const Mat & rhs)=0;
+    // virtual Mat & operator-= (const Mat & rhs)=0;
+    // virtual Mat & operator*= (const Mat & rhs)=0;
+    // virtual Mat & operator/= (const Mat & rhs)=0;
     //for type conversions
     template <typename T>
-    explicit operator T() const;
+    operator Mat_<T>&();
 };
-
-
-// template Mat::operator int() const;
-
 
 template <typename T>
 class Mat_:public Mat
@@ -100,10 +99,10 @@ class Mat_:public Mat
     }
 
     bool operator== (const Mat &rhs);
-    Mat_ & operator+ (const Mat & rhs);
-    Mat_ & operator- (const Mat & rhs);
-    Mat_ & operator* (const Mat & rhs);
-    Mat_ & operator/ (const Mat & rhs);
+    // Mat_ & operator+ (const Mat & rhs);
+    // Mat_ & operator- (const Mat & rhs);
+    // Mat_ & operator* (const Mat & rhs);
+    // Mat_ & operator/ (const Mat & rhs);
 };
 
 // declare the template classes here
@@ -113,9 +112,4 @@ typedef Mat_<int> Mat_int;
 typedef Mat_<float> Mat_float;
 typedef Mat_<double> Mat_double;
 
-//instantiate the template functions of Mat class（need to be instantiate after Mat_ class is instantiated)
-template Mat::operator Mat_uchar() const;
-template Mat::operator Mat_short() const;
-template Mat::operator Mat_int() const;
-template Mat::operator Mat_float() const;
-template Mat::operator Mat_double() const;
+
