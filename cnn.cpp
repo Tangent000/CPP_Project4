@@ -1,6 +1,11 @@
 #include <iostream>
-#include "cnn.h"
+#include "cnn.hpp"
 // member functions for Mat class
+template <typename T>
+Mat::operator T() const
+{
+
+}
 
 // member functions for Mat_ class
 template <typename T>
@@ -85,7 +90,7 @@ bool Mat_<T>::operator==(const Mat &rhs)
 }
 
 template <typename T>
-Mat_<T> Mat_<T>::operator+(const Mat &rhs)
+Mat_<T> & Mat_<T>::operator+(const Mat &rhs)
 {
 #ifdef DEBUG_MODE
     std::cout << "Mat_ addition operator called." << std::endl;
@@ -104,9 +109,4 @@ Mat_<T> Mat_<T>::operator+(const Mat &rhs)
         throw std::invalid_argument("Mat_ addition operator: dimensions do not match.");
 }
 
-// declare the template classes here
-typedef Mat_<unsigned char> Mat_uchar;
-typedef Mat_<short> Mat_short;
-typedef Mat_<int> Mat_int;
-typedef Mat_<float> Mat_float;
-typedef Mat_<double> Mat_double;
+

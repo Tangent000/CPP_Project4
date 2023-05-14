@@ -67,7 +67,13 @@ class Mat
     virtual Mat & operator-= (const Mat & rhs)=0;
     virtual Mat & operator*= (const Mat & rhs)=0;
     virtual Mat & operator/= (const Mat & rhs)=0;
+    //for type conversions
+    template <typename T>
+    explicit operator T() const;
 };
+
+
+// template Mat::operator int() const;
 
 
 template <typename T>
@@ -94,5 +100,22 @@ class Mat_:public Mat
     }
 
     bool operator== (const Mat &rhs);
-    Mat_ operator+ (const Mat & rhs);
+    Mat_ & operator+ (const Mat & rhs);
+    Mat_ & operator- (const Mat & rhs);
+    Mat_ & operator* (const Mat & rhs);
+    Mat_ & operator/ (const Mat & rhs);
 };
+
+// declare the template classes here
+typedef Mat_<unsigned char> Mat_uchar;
+typedef Mat_<short> Mat_short;
+typedef Mat_<int> Mat_int;
+typedef Mat_<float> Mat_float;
+typedef Mat_<double> Mat_double;
+
+//instantiate the template functions of Mat class（need to be instantiate after Mat_ class is instantiated)
+template Mat::operator Mat_uchar() const;
+template Mat::operator Mat_short() const;
+template Mat::operator Mat_int() const;
+template Mat::operator Mat_float() const;
+template Mat::operator Mat_double() const;
